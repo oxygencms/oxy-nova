@@ -70,7 +70,7 @@ class ServiceProvider extends LaravelServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Oxygencms\OxyNova\Commands\InstallOxyNova::class,
+                \Oxygencms\OxyNova\Commands\OxyNovaSetup::class,
             ]);
         }
     }

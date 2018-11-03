@@ -14,7 +14,7 @@ return [
     'locales' => [
         'en' => 'English',
         'bg' => 'Бъларски',
-        'nl' => 'Dutch',
+//        'nl' => 'Dutch',
     ],
 
 ];

@@ -28,6 +28,13 @@ php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=
 ```
 
 
+### Console
+There is an artisan command for quick setup using the default config.
+```
+php artisan oxy-nova:setup
+```
+
+
 ### Tests
 To run the tests include a `<testsuite>` tag in your project's `phpunit.php` file and point it to the tests dir.
  

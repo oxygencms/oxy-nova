@@ -5,7 +5,7 @@ namespace Oxygencms\OxyNova\Commands;
 use Illuminate\Console\Command;
 use Oxygencms\OxyNova\ServiceProvider;
 
-class InstallOxyNova extends Command
+class OxyNovaSetup extends Command
 {
     /**
      * The name and signature of the console command.
@@ -34,19 +34,27 @@ class InstallOxyNova extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
-        $tags = ['config', 'translations', 'views'];
-
-        foreach ($tags as $tag) {
-            $this->call('vendor:publish', [
-                '--provider' => ServiceProvider::class,
-                '--tag' => $tag,
-            ]);
-        }
+        $this->publishFiles();
 
         $this->info('Setup complete. Enjoy!');
+    }
+
+    /**
+     * Publish all the stuff..
+     *
+     * @return void
+     */
+    public function publishFiles()
+    {
+        $this->info('Publishing stuff..');
+
+        $this->call('vendor:publish', [
+            '--provider' => ServiceProvider::class,
+            '--tag' => ['config', 'translations', 'views'],
+        ]);
     }
 }
