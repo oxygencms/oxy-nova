@@ -1,0 +1,28 @@
+{
+    "name": "oxygencms/oxy-nova",
+    "description": "Set of tools and boilerplate to use with Laravel Nova.",
+    "keywords": ["oxygen", "cms", "laravel", "nova"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Blagoev",
+            "email": "mb.reppair@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Oxygencms\\OxyNova\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Oxygencms\\OxyNova\\ServiceProvider"
+            ]
+        }
+    }
+}
