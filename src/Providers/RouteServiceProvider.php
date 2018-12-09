@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygencms\OxyNova;
+namespace Oxygencms\OxyNova\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapSetLocaleRoute()
     {
-        Route::get('set-locale/{locale}', 'Oxygencms\OxyNova\Controllers\LocaleController@setLocale')
+        Route::get('set-locale/{locale}', config('oxygen.locale_controller') . '@setLocale')
              ->name('setLocale');
     }
 }

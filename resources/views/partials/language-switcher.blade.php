@@ -13,7 +13,7 @@
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navUserDropdown">
         @foreach(config('oxygen.locales') as $key => $value)
-            <a href="/lang/{{ $key }}"
+            <a href="{{ route('setLocale', $key) }}"
                class="dropdown-item {{ app()->isLocale($key) ? 'active' : null }}"
                title="{{ $value }}"
             >

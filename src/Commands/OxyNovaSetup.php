@@ -3,7 +3,7 @@
 namespace Oxygencms\OxyNova\Commands;
 
 use Illuminate\Console\Command;
-use Oxygencms\OxyNova\ServiceProvider;
+use Oxygencms\OxyNova\ServiceProvider as OxyNovaServiceProvider;
 
 class OxyNovaSetup extends Command
 {
@@ -38,6 +38,8 @@ class OxyNovaSetup extends Command
      */
     public function handle()
     {
+        $this->info('Publishing stuff..');
+
         $this->publishFiles();
 
         $this->info('Setup complete. Enjoy!');
@@ -50,11 +52,9 @@ class OxyNovaSetup extends Command
      */
     public function publishFiles()
     {
-        $this->info('Publishing stuff..');
-
         $this->call('vendor:publish', [
-            '--provider' => ServiceProvider::class,
-            '--tag' => ['config', 'translations', 'views'],
+            '--provider' => OxyNovaServiceProvider::class,
+            '--tag' => ['config', 'translations', 'views', 'database'],
         ]);
     }
 }

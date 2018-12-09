@@ -4,6 +4,9 @@ namespace Oxygencms\OxyNova;
 
 use Illuminate\Routing\Router;
 use Oxygencms\OxyNova\Middleware\SetLocale;
+use Oxygencms\OxyNova\Commands\OxyNovaSetup;
+use Oxygencms\OxyNova\Providers\NovaServiceProvider;
+use Oxygencms\OxyNova\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -23,9 +26,11 @@ class ServiceProvider extends LaravelServiceProvider
             __DIR__ . '/../config/oxygen.php' => config_path('oxygen.php')
         ], 'config');
 
+        $this->publishTranslations();
+
         $this->publishViews();
 
-        $this->publishTranslations();
+        $this->publishDatabase();
 
         $this->registerConsoleCommands();
     }
@@ -40,17 +45,14 @@ class ServiceProvider extends LaravelServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/oxygen.php', 'oxygen');
 
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->register(NovaServiceProvider::class);
     }
 
-    public function publishViews()
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'oxygen');
-
-        $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/oxygen'),
-        ], 'views');
-    }
-
+    /**
+     * Publishes all available translation files depending on the locales configured.
+     *
+     */
     public function publishTranslations()
     {
         $path = __DIR__ . '/../resources/lang';
@@ -66,11 +68,48 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes($translations, 'translations');
     }
 
+    /**
+     * Publishes all available views.
+     *
+     */
+    public function publishViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'oxygen');
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/oxygen'),
+        ], 'views');
+    }
+
+    /**
+     * Publishes all database related publishers. Using the 'database' tag will publish them all.
+     *
+     */
+    public function publishDatabase()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__ . '/../database/seeds' => database_path('seeds'),
+        ], 'seeds');
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+            __DIR__ . '/../database/seeds' => database_path('seeds'),
+        ], 'database');
+    }
+
+    /**
+     * Register the console commands for the package.
+     *
+     */
     public function registerConsoleCommands()
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Oxygencms\OxyNova\Commands\OxyNovaSetup::class,
+                OxyNovaSetup::class,
             ]);
         }
     }

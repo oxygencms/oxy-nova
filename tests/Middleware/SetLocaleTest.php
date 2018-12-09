@@ -8,7 +8,7 @@ class SetLocaleTest extends TestCase
 {
     public $default_locale;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
@@ -17,6 +17,9 @@ class SetLocaleTest extends TestCase
         $this->startSession();
     }
 
+    /**
+     * @test
+     */
     public function testSetDefaultLocale()
     {
         $this->get('/')
@@ -25,6 +28,9 @@ class SetLocaleTest extends TestCase
         $this->assertEquals($this->default_locale, $this->app->getLocale());
     }
 
+    /**
+     * @test
+     */
     public function testInvalidLocaleCantBeSet()
     {
         $this->session(['app_locale' => 'wrong'])
@@ -34,6 +40,9 @@ class SetLocaleTest extends TestCase
         $this->assertEquals($this->default_locale, $this->app->getLocale());
     }
 
+    /**
+     * @test
+     */
     public function testSetLocale()
     {
         $valid_locale = last(array_keys(config('oxygen.locales')));

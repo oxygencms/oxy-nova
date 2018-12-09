@@ -10,7 +10,6 @@ class LocaleController extends Controller
      * @param $locale
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function setLocale($locale)
     {

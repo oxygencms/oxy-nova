@@ -6,6 +6,9 @@ use Tests\TestCase;
 
 class LocaleControllerTest extends TestCase
 {
+    /**
+     * @test
+     */
     public function testLocaleValidation()
     {
         $this->startSession()
@@ -14,6 +17,9 @@ class LocaleControllerTest extends TestCase
              ->assertRedirect();
     }
 
+    /**
+     * @test
+     */
     public function testSettingValidLocale()
     {
         $valid_locale = last(array_keys(config('oxygen.locales')));
