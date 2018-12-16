@@ -38,6 +38,27 @@ $config = [
 
     /*
     |--------------------------------------------------------------------------
+    | Pages
+    |--------------------------------------------------------------------------
+    |
+    | page_model - The pages model.
+    |
+    */
+
+    'page_model' => \Oxygencms\OxyNova\Models\Page::class,
+
+    // layout
+    'page_default_layout' => 'app',
+    'page_layouts_path' => resource_path('views/vendor/oxygencms/layouts'),
+    'page_layouts_package_path' => base_path('vendor/oxygencms/oxy-nova/resources/views/layouts'),
+
+    // template
+    'page_default_template' => 'default',
+    'page_templates_path' => resource_path('views/vendor/oxygencms/pages'),
+    'page_templates_package_path' => base_path('vendor/oxygencms/oxy-nova/resources/views/pages'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Nova Resources
     |--------------------------------------------------------------------------
     |
@@ -46,7 +67,8 @@ $config = [
     */
 
     'nova_resources' => [
-        'phrase' => \Oxygencms\OxyNova\Nova\Phrase::class
+        \Oxygencms\OxyNova\Nova\Phrase::class,
+        \Oxygencms\OxyNova\Nova\Page::class,
     ],
 
 ];

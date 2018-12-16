@@ -36,4 +36,16 @@ class Phrase extends Model
                      ->pluck('message', 'key')
                      ->all();
     }
+
+    /**
+     * Get the available phrase groups.
+     *
+     * @return array
+     */
+    public static function getGroups(): array
+    {
+        $groups = config('oxygen.phrase_groups');
+
+        return array_combine($groups, $groups);
+    }
 }

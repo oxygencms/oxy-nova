@@ -24,10 +24,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function resources()
     {
-        $resources = config('oxygen.nova_resources');
-
-        Nova::resources([
-            $resources['phrase'],
-        ]);
+        Nova::resources(config('oxygen.nova_resources'));
     }
 }

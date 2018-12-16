@@ -16,23 +16,23 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
 
+            // system
             $table->boolean('active')->default(1);
-
             $table->string('name')->unique()->index();
-
             $table->string('layout')
                   ->default(config('oxygen.page_default_layout'));
-
             $table->string('template')
                   ->default(config('oxygen.page_default_template'));
 
+            // SEO
             $table->json('slug');
             $table->json('title');
-            $table->json('summary')->nullable();
-            $table->json('body')->nullable();
             $table->json('meta_keywords')->nullable();
             $table->json('meta_description')->nullable();
-            $table->json('meta_tags')->nullable();
+
+            // content
+            $table->json('summary')->nullable();
+            $table->json('body')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

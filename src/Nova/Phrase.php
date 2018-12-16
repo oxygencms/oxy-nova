@@ -43,27 +43,23 @@ class Phrase extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
+     * @param Request $request
      * @return array
      */
     public function fields(Request $request)
     {
-        $groupOptions = [];
-
-        foreach (config('oxygen.phrase_groups') as $group) {
-            $groupOptions[$group] = $group;
-        }
+        $groups = $this::getGroups();
 
         return [
             Select::make('group')
-                  ->options($groupOptions)
+                  ->options($groups)
                   ->sortable()
-                  ->rules('required', 'in:' . implode(',', $groupOptions)),
+                  ->rules('required', 'in:' . implode(',', $groups)),
 
             Text::make('key')
                 ->sortable()
-                ->rules('required', 'string', 'max:140'),
+                ->rules('required', 'string', 'max:140')
+                ->updateRules("unique:phrases,key,{{resourceId}},id,group,$request->group"),
 
             Translatable::make('message')
                         ->singleLine()
