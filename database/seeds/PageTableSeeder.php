@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Oxygencms\OxyNova\Models\Page;
+use Oxygencms\OxyNova\Models\PageSection;
 
 class PageTableSeeder extends Seeder
 {
@@ -67,7 +68,19 @@ class PageTableSeeder extends Seeder
         ];
 
         foreach ($pages as $page) {
-            Page::create($page);
+            // create the pages
+            $p = Page::create($page);
+
+            // create some test sections
+            if (env('SEED_TEST_DATA', false)) {
+                factory(PageSection::class, 3)->create(['page_id' => $p->id]);
+            }
+        }
+
+        if (env('SEED_TEST_DATA', false)) {
+            factory(Page::class, 3)->create()->each(function ($testPage) {
+                factory(PageSection::class, 3)->create(['page_id' => $testPage->id]);
+            });
         }
     }
 }

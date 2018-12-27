@@ -82,11 +82,16 @@ class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * Publishes all database related publishers. Using the 'database' tag will publish them all.
+     * Publishes all database related publishers.
+     * The 'database' tag will publish them all.
      *
      */
     public function publishDatabase()
     {
+        $this->publishes([
+            __DIR__ . '/../database/factories' => database_path('factories'),
+        ], 'factories');
+
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ], 'migrations');
@@ -95,10 +100,11 @@ class ServiceProvider extends LaravelServiceProvider
             __DIR__ . '/../database/seeds' => database_path('seeds'),
         ], 'seeds');
 
-        $this->publishes([
+        $this->publishes(array_filter([
+            __DIR__ . '/../database/factories' => database_path('factories'),
             __DIR__ . '/../database/migrations' => database_path('migrations'),
             __DIR__ . '/../database/seeds' => database_path('seeds'),
-        ], 'database');
+        ]), 'database');
     }
 
     /**

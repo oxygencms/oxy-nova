@@ -9,15 +9,11 @@ class Phrase extends Model
     use HasTranslations;
 
     /**
-     * Attributes that should be mass assignable.
-     *
      * @var array
      */
     public $fillable = ['group', 'key', 'message'];
 
     /**
-     * Attributes that should be translatable.
-     *
      * @var array
      */
     public $translatable = ['message'];

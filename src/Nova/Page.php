@@ -2,17 +2,15 @@
 
 namespace Oxygencms\OxyNova\Nova;
 
-use App\Rules\RequiredTranslations;
-use App\Rules\UniqueTranslations;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Panel;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use MrMonat\Translatable\Translatable;
+use Illuminate\Support\Facades\Validator;
 
 class Page extends Resource
 {
@@ -50,8 +48,7 @@ class Page extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
+     * @param Request $request
      * @return array
      * @throws \Exception
      */
@@ -61,7 +58,7 @@ class Page extends Resource
         $templates   = $this::getTemplates();
         $name_format = '/^[a-z_-]+$/u';
 
-        return [
+        return array_filter([
             ID::make('id')->onlyOnDetail(),
 
             Boolean::make('Active'),
@@ -84,7 +81,9 @@ class Page extends Resource
             new Panel('SEO', $this->getSeoPanelFields($request)),
 
             new Panel('Content', $this->getContentPanelFields()),
-        ];
+
+            $this->getHasManySectionsField(),
+        ]);
     }
 
     /**
@@ -146,6 +145,16 @@ class Page extends Resource
 
             Translatable::make('Body')->onlyOnDetail()->asHtml(),
         ];
+    }
+
+    /**
+     * @return HasMany
+     */
+    protected function getHasManySectionsField()
+    {
+        if ( ! $this->isSoftDeleted()) {
+            return HasMany::make('Page Sections', 'sections', PageSection::class);
+        }
     }
 
     /**

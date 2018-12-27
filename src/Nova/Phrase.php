@@ -58,8 +58,11 @@ class Phrase extends Resource
 
             Text::make('key')
                 ->sortable()
-                ->rules('required', 'string', 'max:140')
-                ->updateRules("unique:phrases,key,{{resourceId}},id,group,$request->group"),
+                ->rules(
+                    'required',
+                    'string',
+                    'max:140',
+                    "unique:phrases,key,{{resourceId}},id,group,$request->group"),
 
             Translatable::make('message')
                         ->singleLine()

@@ -29,6 +29,11 @@ php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=
 
 
 ### Migrations, Seeds and Factories
+To publish the factories for this package you can use the `factories` tag: 
+```
+php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=factories
+```
+
 To publish the migrations for this package you can use the `migrations` tag: 
 ```
 php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=migrations
@@ -43,6 +48,9 @@ To publish all of the above at once you can use the `database` tag:
 ```
 php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=database
 ```
+
+To include some dummy data for the packages entities add the `SEED_TEST_DATA=true` to the
+`.env` file and seed your database with `php artisan migrate:fresh --seed` command.
 
 
 ### Console
@@ -77,3 +85,8 @@ CACHE_DRIVER=redis
 Then phrases and translations are both accessed with the standard Laravel helpers `@lang()`, `__()`, `trans()` &
  `trans_choice()`. If a phrase exists in the database with the given group/key it will be returned and cached. If not 
  the one from the translation files will be returned instead. If both are present the one from DB will take precedence.
+ 
+ 
+ ### Pages
+ ### Page Sections
+ On deleting a page all it's sections will be soft deleted as well and restored on page restore.

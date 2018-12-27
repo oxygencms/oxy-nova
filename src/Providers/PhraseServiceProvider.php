@@ -16,6 +16,10 @@ class PhraseServiceProvider extends TranslationServiceProvider
      */
     public function boot()
     {
+        // Set the translatable.locales value so the Translatable Nova field type knows what locales are available.
+        // https://github.com/mrmonat/nova-translatable
+        \Config::set('translatable.locales', config('oxygen.locales'));
+
         Phrase::observe(PhraseObserver::class);
     }
 

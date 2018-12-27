@@ -1,6 +1,6 @@
 <?php
 
-$config = [
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ $config = [
 
     /*
     |--------------------------------------------------------------------------
-    | Pages
+    | Pages & Page Sections
     |--------------------------------------------------------------------------
     |
     | page_model - The pages model.
@@ -46,6 +46,7 @@ $config = [
     */
 
     'page_model' => \Oxygencms\OxyNova\Models\Page::class,
+    'page_section_model' => \Oxygencms\OxyNova\Models\PageSection::class,
 
     // layout
     'page_default_layout' => 'app',
@@ -69,12 +70,6 @@ $config = [
     'nova_resources' => [
         \Oxygencms\OxyNova\Nova\Phrase::class,
         \Oxygencms\OxyNova\Nova\Page::class,
+        \Oxygencms\OxyNova\Nova\PageSection::class,
     ],
-
 ];
-
-// Set the translatable.locales value so the Translatable field type knows what locales are available.
-// https://github.com/mrmonat/nova-translatable
-Config::set('translatable.locales', $config['locales']);
-
-return $config;

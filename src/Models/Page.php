@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Page extends Model
 {
@@ -97,6 +98,9 @@ class Page extends Model
     }
 
     /**
+     * Do not allow the home page to be deleted
+     * and soft delete all page sections.
+     *
      * @return bool|null|void
      * @throws \Exception
      */
@@ -105,7 +109,30 @@ class Page extends Model
         if ($this->name == 'home') {
             throw new \Exception('Cannot delete the home page!');
         }
+        $this->sections->each->delete();
 
         parent::delete();
+    }
+
+    /**
+     * When restoring a page restore it's sections as well.
+     */
+    public function restore()
+    {
+        $sections = PageSection::onlyTrashed()->where('page_id', $this->id)->get();
+
+        if ($sections->isNotEmpty()) {
+            $sections->each->restore();
+        }
+
+        parent::restore();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function sections(): HasMany
+    {
+        return $this->hasMany(config('oxygen.page_section_model'));
     }
 }

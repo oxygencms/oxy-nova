@@ -3,6 +3,7 @@
 namespace Oxygencms\OxyNova\Providers;
 
 use Laravel\Nova\Nova;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -14,6 +15,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function boot()
     {
+        $this->registerLaravelNovaFieldMacros();
+
         parent::boot();
     }
 
@@ -25,5 +28,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function resources()
     {
         Nova::resources(config('oxygen.nova_resources'));
+    }
+
+    /**
+     * Register some Nova field macros.
+     */
+    protected function registerLaravelNovaFieldMacros()
+    {
+        // Add a macro to make a field read only for update
+        Field::macro('onUpdateReadOnly', function () {
+            return request()->is('*/update-fields')
+                ? $this->withMeta(['extraAttributes' => ['readonly' => true]])
+                : $this;
+        });
     }
 }
