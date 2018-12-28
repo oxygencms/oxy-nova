@@ -2,7 +2,6 @@
 
 namespace Oxygencms\OxyNova;
 
-use Config;
 use Illuminate\Routing\Router;
 use Oxygencms\OxyNova\Middleware\SetLocale;
 use Oxygencms\OxyNova\Commands\OxyNovaSetup;
@@ -22,7 +21,7 @@ class ServiceProvider extends LaravelServiceProvider
         $router->pushMiddlewareToGroup('web', SetLocale::class);
 
         $this->publishes([
-            __DIR__ . '/../config/oxygen.php' => config_path('oxygen.php')
+            __DIR__ . '/../config/oxygen.php' => config_path('oxygen.php'),
         ], 'config');
 
         $this->publishTranslations();
@@ -130,24 +129,27 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function defineConstants(): void
     {
-        if (!defined('OXYGEN_PHRASE')) define('OXYGEN_PHRASE', config('oxygen.phrase_model'));
+        if ( ! defined('OXYGEN_PHRASE'))
+            define('OXYGEN_PHRASE', config('oxygen.phrase_model'));
 
-        if (!defined('OXYGEN_PAGE')) define('OXYGEN_PAGE', config('oxygen.page_model'));
+        if ( ! defined('OXYGEN_PAGE'))
+            define('OXYGEN_PAGE', config('oxygen.page_model'));
 
-        if (!defined('OXYGEN_PAGE_SECTION')) define('OXYGEN_PAGE_SECTION', config('oxygen.page_section_model'));
+        if ( ! defined('OXYGEN_PAGE_SECTION'))
+            define('OXYGEN_PAGE_SECTION', config('oxygen.page_section_model'));
     }
 
     /**
-     * Configure few media library related options.
+     * Provides fallback if those options are not configured.
      *
      * @return void
      */
     protected function configureMediaLibrary()
     {
-        Config::set('filesystems.disks.media', config('oxygen.media_disk'));
+        if ( ! config('filesystems.disks.media'))
+            config()->set('filesystems.disks.media', config('oxygen.media_disk'));
 
-        Config::set('medialibrary.disk_name', config('oxygen.default_media_disk'));
-
-        Config::set('medialibrary.image_driver', config('oxygen.image_driver'));
+        if ( ! config('medialibrary.disk_name'))
+            config()->set('medialibrary.disk_name', config('oxygen.default_media_disk'));
     }
 }

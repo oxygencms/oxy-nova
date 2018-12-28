@@ -49,25 +49,29 @@
                         <hr>
                         <pre><u>images</u> collection:</pre>
                         <div class="row">
-                        @foreach($page->getMedia('images') as $image)
-                            <div class="col-2">
-                                <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">
-                            </div>
-                        @endforeach
+                            @foreach($page->getMedia('images') as $image)
+                                <div class="col-2">
+                                    <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">
+                                </div>
+                            @endforeach
                         </div>
-                        <br>
-                        <pre>Check the media library docs for more info on <a target="_blank" href="https://docs.spatie.be/laravel-medialibrary/v7/responsive-images/getting-started-with-responsive-images">responsive images</a></pre>
 
 
                         <br>
                         <strong>Page Sections</strong>
                         <hr>
                         @foreach($page->sections as $section)
-                        <section>
-                            <pre>active: {{ $section->active ? 'true' : 'false' }}</pre>
-                            <pre>name: {{ $section->name }}</pre>
-{{--                            <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">--}}
-                        </section>
+                            <section>
+                                <pre>active: {{ $section->active ? 'true' : 'false' }}</pre>
+                                <pre>name: {{ $section->name }}</pre>
+                                <div class="row">
+                                    @foreach($section->getMedia('images') as $image)
+                                        <div class="col-2">
+                                            <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </section>
                         @endforeach
                     </div>
                 </div>

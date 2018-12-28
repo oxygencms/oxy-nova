@@ -70,7 +70,7 @@ return [
     |
     */
 
-    // sets new disc in the filesystem
+    // sets the disc in the filesystem if not configured
     'media_disk' => [
         'driver' => 'local',
         'root' => storage_path('app/public/media'),
@@ -78,10 +78,10 @@ return [
         'visibility' => 'public',
     ],
 
-    // overwrites the default disk for the media library
+    // sets the default disk for the media library if not configured
     'default_media_disk' => 'media',
 
-    // overwrites the image driver for the media library
+    // sets the image driver for the media library if not configured
     'image_driver' => 'imagick',
 
     /*

@@ -25,6 +25,28 @@ Publish the `oxygen.php` config file.
 php artisan vendor:publish --provider='Oxygencms\OxyNova\ServiceProvider' --tag=config
 ```
 
+Define the 'media' disk for the media library in the `config/filesystem.php` file.
+```
+    'media_disk' => [
+        'driver' => 'local',
+        'root' => storage_path('app/public/media'),
+        'url' => env('APP_URL').'/media',
+        'visibility' => 'public',
+    ]
+```
+
+Publish the config for the media library it self.
+```
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag=config
+```
+
+In `config/medialibrary.php` set the default `disk_name` and *optionally* the `image_driver`  
+```
+'disk_name' => 'media',
+
+'image_driver' => 'imagick'
+``` 
+
 
 ### Translation Files
 Use the `translations` tag to publish the language files for each locale in the config. (BG & NL available atm).
