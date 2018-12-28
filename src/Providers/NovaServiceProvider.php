@@ -37,7 +37,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         // Add a macro to make a field read only for update
         Field::macro('onUpdateReadOnly', function () {
-            return request()->is('*/update-fields')
+            return request()->is('*/update-fields') && app()->environment() != 'local'
                 ? $this->withMeta(['extraAttributes' => ['readonly' => true]])
                 : $this;
         });

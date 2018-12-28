@@ -62,7 +62,8 @@ class Phrase extends Resource
                     'required',
                     'string',
                     'max:140',
-                    "unique:phrases,key,{{resourceId}},id,group,$request->group"),
+                    "unique:phrases,key,{{resourceId}},id,group,$request->group"
+                ),
 
             Translatable::make('message')
                         ->singleLine()
