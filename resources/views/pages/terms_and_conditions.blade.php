@@ -13,27 +13,62 @@
                     </div>
 
                     <div class="card-body">
+                        <br>
                         <strong>Application info</strong>
                         <hr>
                         <pre>app locale: {{ app()->getLocale() }}</pre>
                         <pre>session locale: {{ session('app_locale') }}</pre>
 
+
+                        <br>
                         <strong>Page system info</strong>
                         <hr>
                         <pre>name: {{ $page->name }}</pre>
                         <pre>layout: {{ $page::getViewsPath('layouts') .'/'. $page->layout .'.blade.php' }}</pre>
                         <pre>template: {{ $page::getViewsPath('pages') .'/'. $page->template .'.blade.php' }}</pre>
 
-                        <strong>Page meta data</strong>
+
+                        <br>
+                        <strong>Page SEO data</strong>
                         <hr>
+                        <pre>slug: {{ $page->slug }}</pre>
+                        <pre>title: {{ $page->title }}</pre>
                         <pre>meta description: {{ $page->meta_description }}</pre>
                         <pre>meta keywords: {{ $page->meta_keywords }}</pre>
 
+
+                        <br>
                         <strong>Page content</strong>
                         <hr>
-                        <pre>sections: {{ $page->sections->pluck('name')->implode(', ') }}</pre>
                         <pre>summary: {{ $page->summary }}</pre>
-                        <pre>body:</pre>{!! $page->body !!}
+                        <pre>body:</pre> {!! $page->body !!}
+
+
+                        <br>
+                        <strong>Page media</strong>
+                        <hr>
+                        <pre><u>images</u> collection:</pre>
+                        <div class="row">
+                            @foreach($page->getMedia('images') as $image)
+                                <div class="col-2">
+                                    <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">
+                                </div>
+                            @endforeach
+                        </div>
+                        <br>
+                        <pre>Check the media library docs for more info on <a target="_blank" href="https://docs.spatie.be/laravel-medialibrary/v7/responsive-images/getting-started-with-responsive-images">responsive images</a></pre>
+
+
+                        <br>
+                        <strong>Page Sections</strong>
+                        <hr>
+                        @foreach($page->sections as $section)
+                            <section>
+                                <pre>active: {{ $section->active ? 'true' : 'false' }}</pre>
+                                <pre>name: {{ $section->name }}</pre>
+                                {{--                            <img class="img-fluid" src="{{ $image->getFullUrl('thumb') }}" alt="image">--}}
+                            </section>
+                        @endforeach
                     </div>
                 </div>
             </div>

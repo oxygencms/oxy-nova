@@ -63,6 +63,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Media Library
+    |--------------------------------------------------------------------------
+    |
+    | Various media library related options.
+    |
+    */
+
+    // sets new disc in the filesystem
+    'media_disk' => [
+        'driver' => 'local',
+        'root' => storage_path('app/public/media'),
+        'url' => env('APP_URL').'/media',
+        'visibility' => 'public',
+    ],
+
+    // overwrites the default disk for the media library
+    'default_media_disk' => 'media',
+
+    // overwrites the image driver for the media library
+    'image_driver' => 'imagick',
+
+    // the help shown on media fields
+    'media_fields_help' => '<strong>Note:</strong> Newly uploaded files may take a while to be processed in the background!',
+
+    /*
+    |--------------------------------------------------------------------------
     | Pages & Page Sections
     |--------------------------------------------------------------------------
     |

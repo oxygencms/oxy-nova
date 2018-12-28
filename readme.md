@@ -7,10 +7,16 @@ composer require oxygencms/oxy-nova
 ```
 
 Since this package requires [spatie/laravel-medialibrary](https://docs.spatie.be/laravel-medialibrary/) to deal with
-uploads and media make you have it's migration published and run.
+uploads and media make sure you have it's migration published and run.
 ```
 php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
 ```  
+
+By default file conversions will be queued. It is recommended to set the `QUEUE_CONNECTION=redis` in your `.env` file.
+If you do so also make sure to create the `failed_jobs` table. Then just run the queue worker as usual.
+```
+php artisan queue:failed-table
+```
 
 
 ### Config

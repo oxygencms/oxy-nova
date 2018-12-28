@@ -19,10 +19,8 @@ class CreatePagesTable extends Migration
             // system
             $table->boolean('active')->default(1);
             $table->string('name')->unique()->index();
-            $table->string('layout')
-                  ->default(config('oxygen.page_default_layout'));
-            $table->string('template')
-                  ->default(config('oxygen.page_default_template'));
+            $table->string('layout')->default('app');
+            $table->string('template')->default('default');
 
             // SEO
             $table->json('slug');
