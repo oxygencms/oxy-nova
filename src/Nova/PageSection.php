@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Panel;
 use MrMonat\Translatable\Translatable;
+use Oxygencms\OxyNova\MediaCollections;
 
 class PageSection extends Resource
 {
@@ -89,6 +91,12 @@ class PageSection extends Resource
             Translatable::make('Body')->onlyOnDetail()->asHtml(),
 
             BelongsTo::make('Page', 'page', Page::class),
+
+            new Panel('Media', function () use ($request) {
+                return [
+                    MediaCollections::imagesField($request),
+                ];
+            }),
         ];
     }
 

@@ -3,20 +3,17 @@
 namespace Oxygencms\OxyNova\Models;
 
 use Illuminate\Support\Facades\File;
-use Spatie\MediaLibrary\Models\Media;
+use Oxygencms\OxyNova\MediaCollections;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Oxygencms\OxyNova\Traits\DefaultMediaConversions;
 
 class Page extends Model implements HasMedia
 {
-    use HasTranslations,
-        SoftDeletes,
-        HasMediaTrait;
+    use HasTranslations, SoftDeletes, HasMediaTrait;
 
     /**
      * @var array $guarded
@@ -156,16 +153,6 @@ class Page extends Model implements HasMedia
      */
     public function registerMediaCollections()
     {
-        $this->addMediaCollection('images')
-             ->acceptsFile(function ($file) {
-                 return in_array($file->mimeType, ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml']);
-             })
-             ->registerMediaConversions(function (Media $media) {
-                 $this->addMediaConversion('thumb')->width(160);
-//                 $this->addMediaConversion('xs')->width(320);
-//                 $this->addMediaConversion('sm')->width(640);
-//                 $this->addMediaConversion('md')->width(1280);
-                 $this->addMediaConversion('lg')->width(1920);
-             });
+        MediaCollections::images($this);
     }
 }

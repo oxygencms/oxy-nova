@@ -2,7 +2,6 @@
 
 namespace Oxygencms\OxyNova\Nova;
 
-use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -11,8 +10,8 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use MrMonat\Translatable\Translatable;
+use Oxygencms\OxyNova\MediaCollections;
 use Illuminate\Support\Facades\Validator;
-use Ebess\AdvancedNovaMediaLibrary\Fields\Files;
 
 class Page extends Resource
 {
@@ -86,31 +85,7 @@ class Page extends Resource
 
             new Panel('Media', function () use ($request) {
                 return [
-                    Images::make('Images', 'images')
-                          ->conversionOnView('thumb')
-                          ->thumbnail('thumb')
-                          ->multiple()
-                          ->fullSize()
-                          ->rules('nullable', function ($attribute, $value, $fail) use ($request) {
-                              $data = [$attribute => []];
-
-                              if (is_array($value)) {
-                                  foreach ($value as $index => $val) {
-                                      if (!is_string($val)) {
-                                          $data[$attribute][explode('.', $val->getClientOriginalName())[0]] = $value[$index];
-                                      }
-                                  }
-                              } elseif (!is_string($value)) {
-                                  $data[$attribute][explode('.', $value->getClientOriginalName())[0]] = $value;
-                              }
-
-                              $validator = Validator::make($data, ["{$attribute}.*" => 'image']);
-
-                              if ($validator->fails())
-                                  $fail($validator->errors()->first());
-                          })
-                          ->hideFromIndex()
-                          ->help(config('oxygen.media_fields_help')),
+                    MediaCollections::imagesField($request),
                 ];
             }),
 

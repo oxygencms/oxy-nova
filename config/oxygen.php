@@ -84,9 +84,6 @@ return [
     // overwrites the image driver for the media library
     'image_driver' => 'imagick',
 
-    // the help shown on media fields
-    'media_fields_help' => '<strong>Note:</strong> Newly uploaded files may take a while to be processed in the background!',
-
     /*
     |--------------------------------------------------------------------------
     | Pages & Page Sections
