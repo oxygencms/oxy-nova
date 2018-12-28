@@ -1,7 +1,7 @@
 # Oxygen CMS package for use with Laravel Nova.
 
 ## Installation
-Require `"oxygencms/oxy-nova": "^0.1.*"` in your own `composer.json` to get the package.
+Require `"oxygencms/oxy-nova": "@dev"` in your own `composer.json` to get the package.
 ```
 composer require oxygencms/oxy-nova
 ```

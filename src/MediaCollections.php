@@ -10,9 +10,15 @@ use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 abstract class MediaCollections
 {
     /**
-     * @var string $helpText
+     * @var array $defaultConversions
      */
-    public static $helpText = '<strong>Note:</strong> Newly uploaded files may take a while to be processed in the background!';
+    public static $defaultConversions = [
+        'thumb' => 160,
+        'xs' => 320,
+        'sm' => 640,
+        'md' => 1280,
+        'lg' => 1920,
+    ];
 
     /**
      * Add images media collection to a model.
@@ -20,18 +26,36 @@ abstract class MediaCollections
      * @param HasMedia $model
      * @return void
      */
-    public static function images(HasMedia $model)
+    public static function images(HasMedia $model): void
     {
         $model->addMediaCollection('images')
               ->acceptsFile(function ($file) {
                   return in_array($file->mimeType, ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml']);
               })
               ->registerMediaConversions(function () use ($model) {
-                  $model->addMediaConversion('thumb')->width(160);
-                  $model->addMediaConversion('xs')->width(320);
-                  $model->addMediaConversion('sm')->width(640);
-                  $model->addMediaConversion('md')->width(1280);
-                  $model->addMediaConversion('lg')->width(1920);
+                  foreach (self::$defaultConversions as $name => $width) {
+                      $model->addMediaConversion($name)->width($width);
+                  }
+              });
+    }
+
+    /**
+     * Add a main single image media collection to a model.
+     *
+     * @param HasMedia $model
+     * @return void
+     */
+    public static function mainImage(HasMedia $model): void
+    {
+        $model->addMediaCollection('main')
+              ->singleFile()
+              ->acceptsFile(function ($file) {
+                  return in_array($file->mimeType, ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml']);
+              })
+              ->registerMediaConversions(function () use ($model) {
+                  foreach (self::$defaultConversions as $name => $width) {
+                      $model->addMediaConversion($name)->width($width);
+                  }
               });
     }
 
@@ -48,7 +72,6 @@ abstract class MediaCollections
                   ->conversionOnView('thumb')
                   ->thumbnail('thumb')
                   ->multiple()
-                  ->fullSize()
                   ->rules('nullable', function ($attribute, $value, $fail) use ($request) {
                       $data = [$attribute => []];
 
@@ -69,5 +92,26 @@ abstract class MediaCollections
                   })
                   ->hideFromIndex()
                   ->help(self::$helpText);
+    }
+
+    /**
+     * Get the field for the 'main' image media collection.
+     *
+     * @param string  $fieldName
+     * @param bool    $hideFromIndex
+     * @return Images
+     */
+    public static function mainImageField(string $fieldName, bool $hideFromIndex = false): Images
+    {
+        $field = Images::make($fieldName, 'main')
+                       ->conversionOnView('thumb')
+                       ->thumbnail('thumb')
+                       ->singleImageRules('');
+
+        if ($hideFromIndex) {
+            $field->hideFromIndex();
+        }
+
+        return $field;
     }
 }

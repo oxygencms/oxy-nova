@@ -151,7 +151,7 @@ class Page extends Model implements HasMedia
     /**
      * @return void
      */
-    public function registerMediaCollections()
+    public function registerMediaCollections(): void
     {
         MediaCollections::images($this);
     }
