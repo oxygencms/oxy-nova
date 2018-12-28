@@ -14,7 +14,7 @@ class Phrase extends Resource
      *
      * @var string
      */
-    public static $model = 'Oxygencms\OxyNova\Models\Phrase';
+    public static $model = OXYGEN_PHRASE;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

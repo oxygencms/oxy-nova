@@ -19,7 +19,7 @@ class Page extends Resource
      *
      * @var string
      */
-    public static $model = 'Oxygencms\OxyNova\Models\Page';
+    public static $model = OXYGEN_PAGE;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

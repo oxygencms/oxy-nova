@@ -65,7 +65,7 @@ class Page extends Model
      */
     public static function getLayouts()
     {
-        return self::getViewsList('layout');
+        return self::getViewsList('layouts');
     }
 
     /**
@@ -75,7 +75,7 @@ class Page extends Model
      */
     public static function getTemplates()
     {
-        return self::getViewsList('template');
+        return self::getViewsList('pages');
     }
 
     /**
@@ -86,15 +86,24 @@ class Page extends Model
     {
         $list = [];
 
-        $path = file_exists($dir = config('oxygen.page_' . $string . 's_path'))
-            ? $dir
-            : config('oxygen.page_' . $string . 's_package_path');
-
-        foreach (File::files($path) as $view) {
+        foreach (File::files(self::getViewsPath($string)) as $view) {
             array_push($list, substr($view->getFilename(), 0, -10));
         }
 
         return array_combine($list, $list);
+    }
+
+    /**
+     * Get the path to the views.
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function getViewsPath(string $string): string
+    {
+        return file_exists($dir = resource_path("views/vendor/oxygen/$string"))
+            ? $dir
+            : base_path("vendor/oxygencms/oxy-nova/resources/views/$string");
     }
 
     /**
@@ -133,6 +142,6 @@ class Page extends Model
      */
     public function sections(): HasMany
     {
-        return $this->hasMany(config('oxygen.page_section_model'));
+        return $this->hasMany(OXYGEN_PAGE_SECTION);
     }
 }

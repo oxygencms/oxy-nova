@@ -19,7 +19,7 @@ class PageSection extends Resource
      *
      * @var string
      */
-    public static $model = 'Oxygencms\OxyNova\Models\PageSection';
+    public static $model = OXYGEN_PAGE_SECTION;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

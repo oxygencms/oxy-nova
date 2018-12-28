@@ -5,8 +5,6 @@ namespace Oxygencms\OxyNova;
 use Illuminate\Routing\Router;
 use Oxygencms\OxyNova\Middleware\SetLocale;
 use Oxygencms\OxyNova\Commands\OxyNovaSetup;
-use Oxygencms\OxyNova\Providers\NovaServiceProvider;
-use Oxygencms\OxyNova\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -42,11 +40,13 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
+        $this->defineConstants();
+
         $this->mergeConfigFrom(__DIR__ . '/../config/oxygen.php', 'oxygen');
 
-        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(config('oxygen.route_service_provider'));
 
-        $this->app->register(NovaServiceProvider::class);
+        $this->app->register(config('oxygen.nova_service_provider'));
     }
 
     /**
@@ -118,5 +118,19 @@ class ServiceProvider extends LaravelServiceProvider
                 OxyNovaSetup::class,
             ]);
         }
+    }
+
+    /**
+     * Define constants to use instead of hard coding models.
+     *
+     * @return void
+     */
+    protected function defineConstants(): void
+    {
+        if (!defined('OXYGEN_PHRASE')) define('OXYGEN_PHRASE', config('oxygen.phrase_model'));
+
+        if (!defined('OXYGEN_PAGE')) define('OXYGEN_PAGE', config('oxygen.page_model'));
+
+        if (!defined('OXYGEN_PAGE_SECTION')) define('OXYGEN_PAGE_SECTION', config('oxygen.page_section_model'));
     }
 }

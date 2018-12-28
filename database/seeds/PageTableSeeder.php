@@ -32,7 +32,7 @@ class PageTableSeeder extends Seeder
                 'template' => 'terms_and_conditions',
                 'slug' => [
                     'en' => 'terms-and-conditions',
-                    'bg' => 'terms-and-conditions',
+                    'bg' => 'terms-and-conditions-bg',
                 ],
                 'title' => [
                     'en' => 'Terms and Conditions',
@@ -45,7 +45,7 @@ class PageTableSeeder extends Seeder
                 'template' => 'about_us',
                 'slug' => [
                     'en' => 'about-us',
-                    'bg' => 'about-us',
+                    'bg' => 'about-us-bg',
                 ],
                 'title' => [
                     'en' => 'About Us',
@@ -58,7 +58,7 @@ class PageTableSeeder extends Seeder
                 'template' => 'contact_us',
                 'slug' => [
                     'en' => 'contact-us',
-                    'bg' => 'contact-us',
+                    'bg' => 'contact-us-bg',
                 ],
                 'title' => [
                     'en' => 'Contact Us',
@@ -69,11 +69,11 @@ class PageTableSeeder extends Seeder
 
         foreach ($pages as $page) {
             // create the pages
-            $p = Page::create($page);
+            $instance = Page::create($page);
 
             // create some test sections
             if (env('SEED_TEST_DATA', false)) {
-                factory(PageSection::class, 3)->create(['page_id' => $p->id]);
+                factory(PageSection::class, 3)->create(['page_id' => $instance->id]);
             }
         }
 

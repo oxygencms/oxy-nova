@@ -32,6 +32,6 @@ class PageSection extends Model
      */
     public function page(): BelongsTo
     {
-        return $this->belongsTo(config('oxygen.page_model'));
+        return $this->belongsTo(OXYGEN_PAGE);
     }
 }

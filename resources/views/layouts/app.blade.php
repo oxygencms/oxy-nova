@@ -10,8 +10,6 @@
 
     <title>{{ config('app.name') }} @yield('title')</title>
 
-    <!-- todo: add og:crap SEO tags etc. -->
-
     @if(isset($page))
         <meta name="description" content="{{ $page->meta_description }}">
         <meta name="keywords" content="{{ $page->meta_keywords }}">

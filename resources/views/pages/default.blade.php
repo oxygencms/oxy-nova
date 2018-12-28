@@ -4,27 +4,40 @@
 
 @section('content')
 
-    <h1>Examples:</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{ $page->title }}</h3>
+                    </div>
 
-    <legend>Pages</legend>
-    <ul>
-        <li>
-            <strong>Summary:</strong> {{ $page->summary }}
-        </li>
-        <li>
-            <strong>Body:</strong> {!! $page->body !!}
-        </li>
-    </ul>
+                    <div class="card-body">
+                        <strong>Application info</strong>
+                        <hr>
+                        <pre>app locale: {{ app()->getLocale() }}</pre>
+                        <pre>session locale: {{ session('app_locale') }}</pre>
 
-    <legend>Phrases</legend>
-    <ul>
-        <li>@lang('db.with @lang()')</li>
-        <li>{{ __('db.with __()') }}</li>
-        <li>{{ trans('db.with trans()') }}</li>
-        <li>{{ trans_choice('db.with trans_choice()', rand(1, 2)) }}</li>
-    </ul>
+                        <strong>Page system info</strong>
+                        <hr>
+                        <pre>name: {{ $page->name }}</pre>
+                        <pre>layout: {{ $page::getViewsPath('layouts') .'/'. $page->layout .'.blade.php' }}</pre>
+                        <pre>template: {{ $page::getViewsPath('pages') .'/'. $page->template .'.blade.php' }}</pre>
 
-    <pre>app locale: {{ app()->getLocale() }}</pre>
-    <pre>session locale: {{ session('app_locale') }}</pre>
+                        <strong>Page meta data</strong>
+                        <hr>
+                        <pre>meta description: {{ $page->meta_description }}</pre>
+                        <pre>meta keywords: {{ $page->meta_keywords }}</pre>
+
+                        <strong>Page content</strong>
+                        <hr>
+                        <pre>sections: {{ $page->sections->pluck('name')->implode(', ') }}</pre>
+                        <pre>summary: {{ $page->summary }}</pre>
+                        <pre>body:</pre>{!! $page->body !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
