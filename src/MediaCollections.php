@@ -72,6 +72,7 @@ abstract class MediaCollections
                   ->conversionOnView('thumb')
                   ->thumbnail('thumb')
                   ->multiple()
+                  ->hideFromIndex()
                   ->rules('nullable', function ($attribute, $value, $fail) use ($request) {
                       $data = [$attribute => []];
 
@@ -89,16 +90,14 @@ abstract class MediaCollections
 
                       if ($validator->fails())
                           $fail($validator->errors()->first());
-                  })
-                  ->hideFromIndex()
-                  ->help(self::$helpText);
+                  });
     }
 
     /**
      * Get the field for the 'main' image media collection.
      *
-     * @param string  $fieldName
-     * @param bool    $hideFromIndex
+     * @param string $fieldName
+     * @param bool   $hideFromIndex
      * @return Images
      */
     public static function mainImageField(string $fieldName, bool $hideFromIndex = false): Images
