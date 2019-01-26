@@ -22,15 +22,21 @@ class Phrase extends Model
      * Get a group of phrases.
      *
      * @param string $group
+     * @param string $locale
      *
      * @return array
      */
-    public static function getGroup(string $group): array
+    public static function getGroup(string $group, string $locale = null): array
     {
-        return static::query()
-                     ->where('group', $group)
-                     ->pluck('message', 'key')
-                     ->all();
+        $query = static::query()->where('group', $group);
+
+        if (is_null($locale)) {
+            return $query->pluck('message', 'key')->all();
+        }
+
+        return $query->get()->flatMap(function ($phrase) use ($locale) {
+            return [$phrase->key => $phrase->getTranslation('message', $locale)];
+        })->all();
     }
 
     /**
