@@ -40,9 +40,9 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
-        $this->defineConstants();
-
         $this->mergeConfigFrom(__DIR__ . '/../config/oxygen.php', 'oxygen');
+
+        $this->defineConstants();
 
         $this->configureMediaLibrary();
 
@@ -130,13 +130,13 @@ class ServiceProvider extends LaravelServiceProvider
     protected function defineConstants(): void
     {
         if ( ! defined('OXYGEN_PHRASE'))
-            define('OXYGEN_PHRASE', config('oxygen.phrase_model'));
+            define('OXYGEN_PHRASE', config('oxygen.phrase_model', \Oxygencms\OxyNova\Models\Phrase::class));
 
         if ( ! defined('OXYGEN_PAGE'))
-            define('OXYGEN_PAGE', config('oxygen.page_model'));
+            define('OXYGEN_PAGE', config('oxygen.page_model', \Oxygencms\OxyNova\Models\Page::class));
 
         if ( ! defined('OXYGEN_PAGE_SECTION'))
-            define('OXYGEN_PAGE_SECTION', config('oxygen.page_section_model'));
+            define('OXYGEN_PAGE_SECTION', config('oxygen.page_section_model', \Oxygencms\OxyNova\Models\PageSection::class));
     }
 
     /**
