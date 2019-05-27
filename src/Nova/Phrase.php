@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use MrMonat\Translatable\Translatable;
+use Oxygencms\OxyNova\Traits\SortTranslatableFields;
 
 class Phrase extends Resource
 {
+    use SortTranslatableFields;
+
     /**
      * The model the resource corresponds to.
      *
@@ -67,7 +70,8 @@ class Phrase extends Resource
 
             Translatable::make('message')
                         ->singleLine()
-                        ->rules('required', 'array', 'distinct'),
+                        ->rules('required', 'array', 'distinct')
+                        ->sortable(),
         ];
     }
 

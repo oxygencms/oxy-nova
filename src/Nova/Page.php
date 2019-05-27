@@ -12,9 +12,12 @@ use Laravel\Nova\Fields\HasMany;
 use MrMonat\Translatable\Translatable;
 use Oxygencms\OxyNova\MediaCollections;
 use Illuminate\Support\Facades\Validator;
+use Oxygencms\OxyNova\Traits\SortTranslatableFields;
 
 class Page extends Resource
 {
+    use SortTranslatableFields;
+
     /**
      * The model the resource corresponds to.
      *
@@ -62,12 +65,14 @@ class Page extends Resource
         return array_filter([
             ID::make('id')->onlyOnDetail(),
 
-            Boolean::make('Active'),
+            Boolean::make('Active')
+                   ->sortable(),
 
             Text::make('System name', 'name')
                 ->rules('required', 'string', "regex:$name_format", 'max:140')
                 ->creationRules('unique:pages')
-                ->updateRules("unique:pages,name,{{resourceId}}"),
+                ->updateRules("unique:pages,name,{{resourceId}}")
+                ->sortable(),
 
             Select::make('Layout')
                   ->options($layouts)
@@ -118,7 +123,8 @@ class Page extends Resource
                             if ($validator->fails())
                                 $fail($validator->errors()->first());
                         })
-                        ->singleLine(),
+                        ->singleLine()
+                        ->sortable(),
 
             Translatable::make('Title')
                         ->singleLine()
