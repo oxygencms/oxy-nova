@@ -22,7 +22,10 @@
     "autoload": {
         "psr-4": {
             "Oxygencms\\OxyNova\\": "src/"
-        }
+        },
+        "files": [
+            "helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
