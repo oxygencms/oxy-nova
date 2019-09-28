@@ -30,10 +30,9 @@ function activeIfPath(string $path, string $output = 'active', $contains = null)
  */
 function routeToPage(string $page_name): string
 {
-    return route(
-        'page.show',
-        config('oxygen.page_model')::where('name', $page_name)->firstOrFail()->slug
-    );
+    $page = app(config('oxygen.page_model'));
+
+    return route('page.show', $page::where('name', $page_name)->firstOrFail()->slug);
 }
 
 /**
