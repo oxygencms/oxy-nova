@@ -55,7 +55,7 @@ class Page extends Model implements HasMedia, PageInterface
      *
      * @return Builder
      */
-    public function scopeBySlug(Builder $query, string $slug, string $locale = null): array
+    public function scopeBySlug(Builder $query, string $slug, string $locale = null): Builder
     {
         $locale = $locale ?: app()->getLocale();
 
