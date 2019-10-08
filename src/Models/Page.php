@@ -10,8 +10,9 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Oxygencms\OxyNova\Contracts\Page as PageInterface;
 
-class Page extends Model implements HasMedia
+class Page extends Model implements HasMedia, PageInterface
 {
     use HasTranslations, SoftDeletes, HasMediaTrait;
 
@@ -54,7 +55,7 @@ class Page extends Model implements HasMedia
      *
      * @return Builder
      */
-    public function scopeBySlug(Builder $query, string $slug, string $locale = null)
+    public function scopeBySlug(Builder $query, string $slug, string $locale = null): array
     {
         $locale = $locale ?: app()->getLocale();
 
@@ -66,7 +67,7 @@ class Page extends Model implements HasMedia
      *
      * @return array
      */
-    public static function getLayouts()
+    public static function getLayouts(): array
     {
         return self::getViewsList('layouts');
     }
@@ -76,7 +77,7 @@ class Page extends Model implements HasMedia
      *
      * @return array
      */
-    public static function getTemplates()
+    public static function getTemplates(): array
     {
         return self::getViewsList('pages');
     }

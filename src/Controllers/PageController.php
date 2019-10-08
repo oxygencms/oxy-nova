@@ -2,15 +2,17 @@
 
 namespace Oxygencms\OxyNova\Controllers;
 
-use Oxygencms\OxyNova\Models\Page;
+
+use Illuminate\View\View;
+use Oxygencms\OxyNova\Contracts\Page;
 
 class PageController extends Controller
 {
     /**
      * @param Page $page
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
-    public function show(Page $page)
+    public function show(Page $page): View
     {
         $page->load('sections');
 
