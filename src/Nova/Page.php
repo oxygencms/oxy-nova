@@ -105,7 +105,7 @@ class Page extends Resource
      * @return array
      * @throws \Exception
      */
-    private function getSeoPanelFields(Request $request)
+    protected function getSeoPanelFields(Request $request)
     {
         return [
             Translatable::make('Slug')
@@ -145,7 +145,7 @@ class Page extends Resource
      *
      * @return array
      */
-    private function getContentPanelFields()
+    protected function getContentPanelFields()
     {
         return [
             Translatable::make('Summary')
