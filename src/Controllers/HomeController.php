@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function show()
     {
-        $page = Page::bySlug('/')->with('sections')->first();
+        $page = Page::bySlug('/')->with('sections.media')->first();
 
         return view("oxygen::pages.$page->template", compact('page'));
     }
