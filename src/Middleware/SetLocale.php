@@ -18,7 +18,7 @@ class SetLocale
     {
         $locale = session('app_locale');
 
-        if (is_null($locale) || ! in_array($locale, config('oxygen.locales')))
+        if (is_null($locale) || ! in_array($locale, array_keys(config('oxygen.locales'))))
         {
             session()->put('app_locale', config('app.locale'));
         }
