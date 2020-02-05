@@ -3,8 +3,9 @@
 namespace Oxygencms\OxyNova\Providers;
 
 use Oxygencms\OxyNova\Models\Page;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use App\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -20,9 +21,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
         $this->bindPageSlug();
+
+        parent::boot();
     }
 
     /**
@@ -32,26 +33,25 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        // first register the homepage route
-        Route::get('/', config('oxygen.home_controller') . '@show')
-             ->name('home')
-             ->middleware('web');
-
-        // then the application's routes
-        parent::map();
-
-        // then the setLocale route
-        Route::get('set-locale/{locale}', config('oxygen.locale_controller') . '@setLocale')
-             ->name('setLocale')
-             ->middleware('web');
-
-        // if the request is not the laravel nova path
-        if ( ! request()->is(implode('/', array_filter(explode('/', config('nova.path')))))) {
-            // register page.show as THE LAST route (match pages by slug)
-            Route::get('{page_slug}', config('oxygen.page_controller') . '@show')
-                 ->name('page.show')
+        Route::domain(config('app.url'))->group(function () {
+            Route::get('/', config('oxygen.home_controller') . '@show')
+                 ->name('home')
                  ->middleware('web');
-        }
+        });
+
+        App::booted(function () {
+            // if the request is not the Laravel Nova path
+            if ( ! request()->is(implode('/', array_filter(explode('/', config('nova.path')))))) {
+                // register page.show as THE LAST route (match pages by slug)
+                Route::get('{page_slug}', config('oxygen.page_controller') . '@show')
+                     ->name('page.show')
+                     ->middleware('web');
+            }
+
+            Route::get('set-locale/{locale}', config('oxygen.locale_controller') . '@setLocale')
+                 ->name('setLocale')
+                 ->middleware('web');
+        });
     }
 
     /**
