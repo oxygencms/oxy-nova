@@ -98,4 +98,8 @@ return [
 
     'home_controller' => \Oxygencms\OxyNova\Controllers\HomeController::class,
     'page_controller' => \Oxygencms\OxyNova\Controllers\PageController::class,
+
+    // Layouts & pages templates location
+    'layouts_path' => 'views/vendor/oxygen/layouts',
+    'pages_path' => 'views/vendor/oxygen/pages',
 ];

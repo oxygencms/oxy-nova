@@ -105,7 +105,9 @@ class Page extends Model implements HasMedia, PageInterface
      */
     public static function getViewsPath(string $string): string
     {
-        return file_exists($dir = resource_path("views/vendor/oxygen/$string"))
+        $path = $string == 'pages' ? config('oxygen.pages_path') : config('oxygen.layouts_path');
+        
+        return file_exists($dir = resource_path($path))
             ? $dir
             : base_path("vendor/oxygencms/oxy-nova/resources/views/$string");
     }
