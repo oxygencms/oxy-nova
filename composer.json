@@ -17,12 +17,12 @@
     ],
     "require": {
         "php": ">=7.3.0",
-        "codezero/laravel-unique-translation": "^2.0",
+        "codezero/laravel-unique-translation": "^3.0",
         "mrmonat/nova-translatable": "^2.0",
         "spatie/laravel-translatable": "^4.2",
-        "spatie/laravel-medialibrary": "^7.14",
-        "laravel/nova": "~2.0",
-        "ebess/advanced-nova-media-library": "^2.9"
+        "spatie/laravel-medialibrary": "^8.0",
+        "laravel/nova": "^3.0",
+        "ebess/advanced-nova-media-library": "^3.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
