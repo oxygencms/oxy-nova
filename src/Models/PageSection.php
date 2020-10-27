@@ -3,15 +3,15 @@
 namespace Oxygencms\OxyNova\Models;
 
 use Oxygencms\OxyNova\MediaCollections;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PageSection extends Model implements HasMedia
 {
-    use HasTranslations, SoftDeletes, HasMediaTrait;
+    use HasTranslations, SoftDeletes, InteractsWithMedia;
 
     /**
      * @var array $fillable
@@ -41,7 +41,7 @@ class PageSection extends Model implements HasMedia
     /**
      * @return void
      */
-    public function registerMediaCollections()
+    public function registerMediaCollections(): void
     {
         MediaCollections::images($this);
     }
