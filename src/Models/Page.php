@@ -4,17 +4,17 @@ namespace Oxygencms\OxyNova\Models;
 
 use Illuminate\Support\Facades\File;
 use Oxygencms\OxyNova\MediaCollections;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Oxygencms\OxyNova\Contracts\Page as PageInterface;
 
 class Page extends Model implements HasMedia, PageInterface
 {
-    use HasTranslations, SoftDeletes, HasMediaTrait;
+    use HasTranslations, SoftDeletes, InteractsWithMedia;
 
     /**
      * @var array $guarded
@@ -106,7 +106,7 @@ class Page extends Model implements HasMedia, PageInterface
     public static function getViewsPath(string $string): string
     {
         $path = $string == 'pages' ? config('oxygen.pages_path') : config('oxygen.layouts_path');
-        
+
         return file_exists($dir = resource_path($path))
             ? $dir
             : base_path("vendor/oxygencms/oxy-nova/resources/views/$string");
