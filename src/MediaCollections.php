@@ -4,8 +4,8 @@ namespace Oxygencms\OxyNova;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
+use Spatie\MediaLibrary\HasMedia;
 
 abstract class MediaCollections
 {
