@@ -9,15 +9,16 @@ use Spatie\MediaLibrary\HasMedia;
 
 abstract class MediaCollections
 {
-    /**
-     * @var array $defaultConversions
-     */
     public static $defaultConversions = [
         'thumb' => 160,
         'xs' => 320,
         'sm' => 640,
         'md' => 1280,
         'lg' => 1920,
+    ];
+
+    public static $mimes = [
+        'image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml'
     ];
 
     /**
@@ -30,7 +31,7 @@ abstract class MediaCollections
     {
         $model->addMediaCollection('images')
               ->acceptsFile(function ($file) {
-                  return in_array($file->mimeType, ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml']);
+                  return in_array($file->mimeType, self::$mimes);
               })
               ->registerMediaConversions(function () use ($model) {
                   foreach (self::$defaultConversions as $name => $width) {
@@ -50,7 +51,7 @@ abstract class MediaCollections
         $model->addMediaCollection('main')
               ->singleFile()
               ->acceptsFile(function ($file) {
-                  return in_array($file->mimeType, ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml']);
+                  return in_array($file->mimeType, self::$mimes);
               })
               ->registerMediaConversions(function () use ($model) {
                   foreach (self::$defaultConversions as $name => $width) {
