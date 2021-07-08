@@ -20,7 +20,7 @@
         "codezero/laravel-unique-translation": "^3.0",
         "mrmonat/nova-translatable": "^2.0",
         "spatie/laravel-translatable": "^4.2",
-        "spatie/laravel-medialibrary": "^8.0",
+        "spatie/laravel-medialibrary": "^9.0",
         "laravel/nova": "^3.0",
         "ebess/advanced-nova-media-library": "^3.0"
     },
